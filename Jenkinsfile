@@ -4,6 +4,7 @@ pipeline{
         stage("Code scan"){
             steps{
                 sh 'trivy --version'
+                sh 'trivy fs . -o result.html'
             }
         }
 
