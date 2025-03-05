@@ -1,5 +1,10 @@
 pipeline{
     agent any
+    environment {
+        cloud_region = "us-east-1"
+        ecr_repo = '650959877739.dkr.ecr.us-east-1.amazonaws.com'
+        imag_repo = '650959877739.dkr.ecr.us-east-1.amazonaws.com/jenkins-cicd'
+    }
     stages{
         stage("Code scan"){
             steps{
@@ -10,8 +15,8 @@ pipeline{
         }
         stage("docker login"){
             steps{
-                sh 'aws ecr get-login-password --region us-east-1 | \
-                docker login --username AWS --password-stdin 650959877739.dkr.ecr.us-east-1.amazonaws.com'
+                sh "aws ecr get-login-password --region $cloud_region | \
+                docker login --username AWS --password-stdin $ecr_repo"
                 
             }
         }
@@ -23,14 +28,14 @@ pipeline{
         }
         stage("docker image tag"){
             steps{
-                sh 'docker tag jenkins-cicd:latest 650959877739.dkr.ecr.us-east-1.amazonaws.com/jenkins-cicd:latest'
-                sh 'docker tag jenkins-cicd:latest 650959877739.dkr.ecr.us-east-1.amazonaws.com/jenkins-cicd:v1.$BUILD_NUMBER'
+                sh "docker tag jenkins-cicd:latest $imag_repo:latest"
+                sh "docker tag jenkins-cicd:latest $image_repo:v1.$BUILD_NUMBER"
             }
         }
         stage("push image"){
             steps{
-                sh 'docker push 650959877739.dkr.ecr.us-east-1.amazonaws.com/jenkins-cicd:latest'
-                sh 'docker push 650959877739.dkr.ecr.us-east-1.amazonaws.com/jenkins-cicd:v1.$BUILD_NUMBER'
+                sh "docker push $imag_repo:latest"
+                sh "docker push $image_repo:v1.$BUILD_NUMBER"
             }
         }
     }
