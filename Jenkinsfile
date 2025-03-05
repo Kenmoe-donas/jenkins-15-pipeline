@@ -1,22 +1,21 @@
 pipeline{
     agent any
     stages{
-        stage("clone web"){
+        stage(""Code scan){
             steps{
-                sh 'echo "clone"'
-                sh 'nproc'
+                sh 'trivy --version'
             }
         }
 
-        stage("test code"){
+        stage("docker image build"){
             steps{
-                sh 'echo "test"'
+                sh 'docker -v'
             }
         }
 
-        stage("create file"){
+        stage("push image"){
             steps{
-                sh 'touch test-$BUIL_ID'
+                sh 'docker ps'
             }
         }
     }
