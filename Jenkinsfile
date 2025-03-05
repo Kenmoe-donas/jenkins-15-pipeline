@@ -24,7 +24,7 @@ pipeline{
         stage("docker image tag"){
             steps{
                 sh 'docker tag jenkins-cicd:latest 650959877739.dkr.ecr.us-east-1.amazonaws.com/jenkins-cicd:latest'
-                sh 'docker tag jenkins-cicd:latest 650959877739.dkr.ecr.us-east-1.amazonaws.com/jenkins-cicd:v1.$BUILD_NUMBER'
+                sh 'docker tag jenkins-cicd:latest 650959877739.dkr.ecr.us-east-1.amazonaws.com/jenkins-new:v1.$BUILD_NUMBER'
             }
         }
         stage("push image"){
