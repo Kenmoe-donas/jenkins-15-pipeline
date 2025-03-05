@@ -1,7 +1,7 @@
 pipeline{
     agent any
     environment {
-        cloud_region = "us-east-1"
+        cloud_region = 'us-east-1'
         ecr_repo = '650959877739.dkr.ecr.us-east-1.amazonaws.com'
         imag_repo = '650959877739.dkr.ecr.us-east-1.amazonaws.com/jenkins-cicd'
     }
@@ -29,13 +29,13 @@ pipeline{
         stage("docker image tag"){
             steps{
                 sh "docker tag jenkins-cicd:latest $imag_repo:latest"
-                sh "docker tag jenkins-cicd:latest $image_repo:v1.$BUILD_NUMBER"
+                sh "docker tag jenkins-cicd:latest $imag_repo:v1.$BUILD_NUMBER"
             }
         }
         stage("push image"){
             steps{
                 sh "docker push $imag_repo:latest"
-                sh "docker push $image_repo:v1.$BUILD_NUMBER"
+                sh "docker push $imag_repo:v1.$BUILD_NUMBER"
             }
         }
     }
