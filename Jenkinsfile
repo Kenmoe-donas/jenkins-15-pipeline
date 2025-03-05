@@ -1,7 +1,7 @@
 pipeline{
     agent any
     stages{
-        stage(""Code scan){
+        stage("Code scan"){
             steps{
                 sh 'trivy --version'
             }
